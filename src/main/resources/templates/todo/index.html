@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo一覧</title>
+</head>
+<body>
+<h1>Todo一覧</h1>
+
+<div th:if="${infoMessage}" th:text="${infoMessage}" style="color:green;"></div>
+
+<p>
+    <a th:href="@{/todos/create}">新規投稿</a>
+</p>
+
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>Todoタイトル</th>
+        <th>作成日時</th>
+        <th>更新日時</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todo : ${todos}">
+        <td th:text="${todo.title}"></td>
+        <td th:text="${#temporals.format(todo.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+        <td th:text="${#temporals.format(todo.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td>
+        <td>
+            <a th:href="@{/todos/detail/{id}(id=${todo.id})}">詳細</a>
+            |
+            <a th:href="@{/todos/update/{id}(id=${todo.id})}">編集</a>
+            |
+            <a th:href="@{/todos/delete/{id}(id=${todo.id})}"
+               onclick="return confirm('削除しますか？');">削除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
